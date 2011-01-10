@@ -54,7 +54,7 @@ class ZendExt_HttpRequest extends Zend_Controller_Request_Http
 		} 
 		catch(Exception $exception) 
 		{	
-			throw new XmlRequestBodyException("Error parsing posted XML: " . $exception->getMessage());	
+			throw new ZendExt_XmlRequestBodyException("Error parsing posted XML: " . $exception->getMessage());	
 		}
 		
 	}
@@ -74,7 +74,7 @@ class ZendExt_HttpRequest extends Zend_Controller_Request_Http
         
         if(!$domXml->schemaValidate(realpath($schemaFilePath))) 
         {
-        	throw new XmlRequestBodyException($errorMessageIntro . libxml_get_last_error()->message);
+        	throw new ZendExt_XmlRequestBodyException($errorMessageIntro . libxml_get_last_error()->message);
         }
         
         return $domXml;
