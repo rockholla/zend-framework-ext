@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This is an extension of the standard Zend Framework Controller.  It allows for more RESTful implementation
+ * of controllers, easy protection of resources using HTTP auth and a specific user roles/rights packets, as
+ * well as the ability to react to "crippled" clients, i.e. Flex and HTTPService, that might not be capable
+ * of dealing in HTTP standard protocol.
+ * 
+ * @author rockholla
+ *
+ */
+
 class ZendExt_Controller extends Zend_Controller_Action 
 {
 
