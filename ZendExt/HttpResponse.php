@@ -204,7 +204,27 @@ class ZendExt_HttpResponse extends Zend_Http_Response
 			$this->_contentBody .= '<h3>' . $listTitle . '</h3>';	
 		}
 		
-		$this->_contentBody .= '<p>Displaying <b>' . count($list) . ' records</b></p>';
+		
+		if(Zend_Registry::getInstance()->config->max_per_page && ZendExt_DatabaseTable::$totalListResults != null && ZendExt_DatabaseTable::$totalListResults > 0)
+		{
+			$page = 1;
+			if(isset($_REQUEST["page"]) && $_REQUEST["page"] > 1) $page = $_REQUEST["page"];
+			$rows_per_page = Zend_Registry::getInstance()->config->max_per_page;
+			$offset = ($page - 1) * $rows_per_page;
+			$total = $offset + $rows_per_page;
+			if($total > ZendExt_DatabaseTable::$totalListResults) $total = ZendExt_DatabaseTable::$totalListResults;
+			$displayingText = '<b id="list-showing">' . ($offset + 1) . ' - ' . $total . '</b> of <b id="list-total">' . ZendExt_DatabaseTable::$totalListResults . '</b>';
+			if(($offset + 1) > ZendExt_DatabaseTable::$totalListResults)
+			{
+				$displayingText = '<b id="list-showing">an invalid page</b> of <b id="list-total">' . ZendExt_DatabaseTable::$totalListResults . '<b/>';
+			}
+		}
+		else
+		{
+			$displayingText = '<b id="list-showing">' . count($list) . '</b> of <b id="list-total">' . count($list) . '</b>';
+		}
+		
+		$this->_contentBody .= '<p>Displaying ' . $displayingText . ' records</b></p>';
 
 		// Go through each list item
 		$this->_contentBody .= "\n" . '<ul>' . "\n";

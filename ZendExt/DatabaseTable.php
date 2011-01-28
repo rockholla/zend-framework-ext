@@ -3,6 +3,8 @@
 class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract 
 {
 
+	public static $totalListResults;
+	
 	protected $_db;
     
 	public function init() 
@@ -10,16 +12,31 @@ class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract
 		$this->_db = Zend_Registry::getInstance()->dbAdapter;		
 	}
 	
+	protected function _executeSqlPaged($sql)
+	{		
+		
+		if(Zend_Registry::getInstance()->config->max_per_page) 
+		{
+			$sql_count = preg_replace("/SELECT(.*?)FROM/", "SELECT COUNT(*) as record_count FROM", $sql);
+			$count_result = $this->_executeSql($sql_count);
+			foreach($count_result as $count)
+			{
+				self::$totalListResults = $count["record_count"];	
+			}
+			
+			$page = 1;
+			if(isset($_REQUEST["page"]) && $_REQUEST["page"] > 0) $page = $_REQUEST["page"];
+			$rows_per_page = Zend_Registry::getInstance()->config->max_per_page;
+			$offset = ($page - 1) * $rows_per_page;
+			$sql .= " LIMIT $rows_per_page OFFSET $offset";	
+		}
+		
+		return $this->_executeSql($sql);
+		
+	}
+	
 	protected function _executeSql($sql) 
 	{
-		
-		if(Zend_Registry::getInstance()->config->max_list_rows) 
-		{
-			if(!stristr(strtolower($sql), " limit ")) 
-			{
-				$sql .= " LIMIT " . Zend_Registry::getInstance()->config->max_list_rows;
-			}	
-		}
 		
 		$query = $this->_db->query($sql);
 		if($this->_isFetchQuery($sql)) 

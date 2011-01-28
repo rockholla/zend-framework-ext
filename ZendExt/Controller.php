@@ -292,56 +292,13 @@ class ZendExt_Controller extends Zend_Controller_Action
     protected function _userHasRight($resource, $segment, $action) 
     {
     	
-    	$roles = $this->getHttpRequest()->getParam("userRoles");
     	$applicationId = Zend_Registry::getInstance()->config->application->id;
-    	$passed = false;
-    	
-    	if(!ZendExt_Model::isAssociativeArray($roles["Role"]) && $applicationId = "toco")
-    	{
-    		// means more than one role
-    		$roles = $roles["Role"];
-    	}
-    	
-    	foreach($roles as $role) 
-    	{
-    		
-    		$rights = $role["Rights"];
-    		if(!ZendExt_Model::isAssociativeArray($rights["Right"]) && $applicationId = "toco")
-    		{
-    			// means more than one right
-    			$rights = $rights["Right"];
-    		}
-    		
-    		foreach($rights as $right) 
-    		{
-    			if($right["Application"] == $applicationId || $right["Application"] == "*")
-    			{
-    				if($right["Resource"] == $resource || $right["Resource"] == '*') 
-	    			{
-	    				if($right["Segment"] == $segment || $right["Segment"] == '*') 
-	    				{
-	    					if($right["Action"] == $action || $right["Action"] == '*') 
-	    					{
-	    						if($right["Access"] == 'grant') 
-	    						{
-	    							$passed = true;
-	    						}
-	    						elseif($right["Access"] == 'deny')
-	    						{
-	    							// explicit deny
-	    							return false;
-	    						}
-	    					}
-	    				}
-	    			}	
-    			}
-    		}
-    	}
-    	
-    	return $passed;
+    	$roles = $this->getHttpRequest()->getParam("userRoles");
+    	return ZendExt_ApiUtils::userHasRight($roles, $applicationId, $resource, $segment, $action);
     	
     }
     
+
     protected function _getValidUser($userId, $password) 
     {
     	
