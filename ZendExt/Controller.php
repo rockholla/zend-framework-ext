@@ -97,7 +97,7 @@ class ZendExt_Controller extends Zend_Controller_Action
 						$this->_delete();
 						break;
 					default:
-						$this-_setErrorMethodNotAllow($methodName);
+						$this->_setErrorMethodNotAllow($methodName);
 						break;
 				}
 				

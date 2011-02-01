@@ -3,6 +3,31 @@
 class ZendExt_ApiUtils
 {
 	
+	public static function getRolesFromXml($xml)
+	{
+		return self::xmlToArray($xml->Roles);	
+	}
+	
+	public static function userHasRole($roles, $roleName)
+	{
+		
+		if(!self::isAssociativeArray($roles["Role"]))
+    	{
+    		// means more than one role
+    		$roles = $roles["Role"];
+    	}
+    	
+    	foreach($roles as $role) 
+    	{
+    		if($role["RoleId"] == $roleName)
+    		{
+    			return true;
+    		} 
+    	}
+		return false;
+    	
+	}
+	
 	public static function userHasRight($roles, $applicationId, $resource, $segment, $action)
     {
     	
