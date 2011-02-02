@@ -224,7 +224,7 @@ class ZendExt_HttpResponse extends Zend_Http_Response
 			$displayingText = '<b id="list-showing">' . count($list) . '</b> of <b id="list-total">' . count($list) . '</b>';
 		}
 		
-		$this->_contentBody .= '<p>Displaying ' . $displayingText . ' records</b></p>';
+		$this->_contentBody .= '<p>Displaying ' . $displayingText . ' records</p>';
 
 		// Go through each list item
 		$this->_contentBody .= "\n" . '<ul>' . "\n";
