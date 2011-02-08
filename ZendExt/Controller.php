@@ -294,6 +294,7 @@ class ZendExt_Controller extends Zend_Controller_Action
     	
     	$applicationId = Zend_Registry::getInstance()->config->application->id;
     	$roles = $this->getHttpRequest()->getParam("userRoles");
+
     	return ZendExt_ApiUtils::userHasRight($roles, $applicationId, $resource, $segment, $action);
     	
     }

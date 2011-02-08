@@ -13,6 +13,13 @@ class ZendExt_StringUtils
 		return self::removeSpaces(strtolower($string));	
 	}
 	
+	public static function getIdFromName($name)
+	{
+		$id = strtolower(str_replace(" ", "_", $name));
+		$id = preg_replace('/[^A-Za-z0-9-_]/', "", $id);
+		return $id;
+	}
+	
 	public static function getAsSingular($plural) 
 	{
 		
