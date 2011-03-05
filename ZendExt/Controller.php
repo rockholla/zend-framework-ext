@@ -14,6 +14,7 @@ class ZendExt_Controller extends Zend_Controller_Action
 {
 
 	public static $userRecord;
+	public static $responseNotification;
 	
 	protected $_httpRequest;
 	protected $_httpResponse;
@@ -45,6 +46,7 @@ class ZendExt_Controller extends Zend_Controller_Action
 		if(isset($_SERVER["HTTP_X_CLEARCACHE"]) || isset($_REQUEST["clearCache"])) 
 		{
 			Zend_Registry::getInstance()->cache->clean();
+			self::$responseNotification = 'The cache has been cleared.';
 		}
 		
 		// call the appropriate method function
