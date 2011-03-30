@@ -141,9 +141,7 @@ class ZendExt_ApiUtils
 	
 	public static function makeXmlText($value, $makeXmlCdata = true)
 	{
-		// this one is for a floating '&'
-		$value = preg_replace('/&(?![a-z]+[;]+)/', "&amp;", $value);
-	
+		
 		// check if the $value itself is XML.  If so and our parameter $makeXmlCdata is true, then CDATA the text
 		$value_as_xml = simplexml_load_string($value);
 		if(!($value_as_xml === false) && $makeXmlCdata == true) 
@@ -152,12 +150,12 @@ class ZendExt_ApiUtils
 		}
 		elseif($value_as_xml === false)
 		{
-			// We don't have XML, so let's replace all "<" and ">" with "&lt;" and "&gt;"
-			$value = str_replace("<", "&lt;", $value);
-			$value = str_replace(">", "&gt;", $value);
+			// We don't have XML, so let's espace html special characters
+			$value = htmlspecialchars($value);
 		}
 	
 		return $value;
+		
 	}
 	
 	public static function isAssociativeArray($var)
