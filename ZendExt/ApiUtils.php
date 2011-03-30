@@ -143,7 +143,7 @@ class ZendExt_ApiUtils
 	{
 		
 		// check if the $value itself is XML.  If so and our parameter $makeXmlCdata is true, then CDATA the text
-		$value_as_xml = simplexml_load_string($value);
+		@$value_as_xml = simplexml_load_string($value);
 		if(!($value_as_xml === false) && $makeXmlCdata == true) 
 		{
 			$value = "<![CDATA[" . $value . "]]>";
