@@ -301,6 +301,14 @@ class ZendExt_Controller extends Zend_Controller_Action
     	
     }
     
+    protected function _userHasRole($roleName)
+    {
+    	
+    	$roles = $this->getHttpRequest()->getParam("userRoles");
+    	return ZendExt_ApiUtils::userHasRole($roles,$roleName);
+    	
+    }
+    
 
     protected function _getValidUser($userId, $password) 
     {
