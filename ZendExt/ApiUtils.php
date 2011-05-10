@@ -163,7 +163,7 @@ class ZendExt_ApiUtils
         return (array_merge($var) !== $var || !is_numeric( implode( array_keys( $var ) ) ) );
     }
     
-	function isValidMd5($md5)
+	public static function isValidMd5($md5)
 	{
     	return !empty($md5) && preg_match('/^[a-f0-9]{32}$/', $md5);
 	}
