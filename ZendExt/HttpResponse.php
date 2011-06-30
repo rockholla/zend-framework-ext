@@ -213,7 +213,7 @@ class ZendExt_HttpResponse extends Zend_Http_Response
 			$offset = ($page - 1) * $rows_per_page;
 			$total = $offset + $rows_per_page;
 			if($total > ZendExt_DatabaseTable::$totalListResults) $total = ZendExt_DatabaseTable::$totalListResults;
-			$displayingText = '<b id="list-showing">' . ($offset + 1) . ' - ' . $total . '</b> of <b id="list-total">' . ZendExt_DatabaseTable::$totalListResults . '</b>';
+			$displayingText = '<b id="list-showing">' . ($offset + 1) . ' to ' . $total . '</b> of <b id="list-total">' . ZendExt_DatabaseTable::$totalListResults . '</b>';
 			if(($offset + 1) > ZendExt_DatabaseTable::$totalListResults)
 			{
 				$displayingText = '<b id="list-showing">an invalid page</b> of <b id="list-total">' . ZendExt_DatabaseTable::$totalListResults . '<b/>';
