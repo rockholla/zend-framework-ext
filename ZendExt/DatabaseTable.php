@@ -5,11 +5,10 @@ class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract
 
 	public static $totalListResults;
 	
-	protected $_db;
-    
-	public function init() 
-	{	
-		$this->_db = Zend_Registry::getInstance()->dbAdapter;		
+	public function setUtf8()
+	{
+		$this->_db->query("SET NAMES 'utf8'");
+		$this->_db->query("SET CHARACTER SET 'utf8'");
 	}
 	
 	protected function _executeSqlPaged($sql)
@@ -38,11 +37,16 @@ class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract
 	protected function _executeSql($sql) 
 	{
 		
-		$query = $this->_db->query($sql);
 		if($this->_isFetchQuery($sql)) 
 		{
+			$query = $this->_db->query($sql);
 			$rows = $query->fetchAll();
     		return $rows;
+		}
+		else
+		{
+			$this->setUtf8();
+			$this->_db->query($sql);
 		}
 		
 		return null;
