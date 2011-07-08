@@ -14,7 +14,8 @@ class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract
 	protected function _executeSqlPaged($sql)
 	{		
 		
-		if(Zend_Registry::getInstance()->config->max_per_page) 
+		$showAll = isset($_GET["showAll"]) && $_GET["showAll"] == "true";
+		if(Zend_Registry::getInstance()->config->max_per_page && !$showAll) 
 		{
 			$sql_count = preg_replace("/SELECT(.*?)FROM/", "SELECT COUNT(*) as record_count FROM", $sql);
 			$count_result = $this->_executeSql($sql_count);
