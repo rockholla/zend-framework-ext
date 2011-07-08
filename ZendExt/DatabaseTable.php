@@ -45,7 +45,7 @@ class ZendExt_DatabaseTable extends Zend_Db_Table_Abstract
 		}
 		else
 		{
-			$this->setUtf8();
+			//$this->setUtf8();
 			$this->_db->query($sql);
 		}
 		
